@@ -1,0 +1,123 @@
+<div class="chat-container">
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <!-- Top Search Bar -->
+    <div class="search-header">
+      <div class="user-avatar">
+        <!-- Reference user-avatar.jpeg -->
+        <img [src]="'assets/images/user-avatar.jpeg'" alt="User" />
+      </div>
+      <div class="search-box">
+        <input type="text" placeholder="Search" />
+        <button class="search-btn">🔍</button>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="tab active">ALL</button>
+      <button class="tab">PEOPLE</button>
+      <button class="tab">GROUPS</button>
+    </div>
+
+    <!-- Chat List -->
+    <div class="chat-list">
+      <div
+        *ngFor="let user of users"
+        class="chat-item"
+        [class.active]="user.id === selectedUser.id"
+      >
+        <div class="chat-avatar" [attr.data-initial]="user.initial">
+          <img *ngIf="user.avatar" [src]="user.avatar" [alt]="user.name" />
+        </div>
+        <div class="chat-info">
+          <div class="chat-name">{{ user.name }}</div>
+          <div class="chat-status">{{ user.status }}</div>
+        </div>
+        <div class="chat-time">{{ user.lastSeen }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Chat Area -->
+  <div class="main-chat">
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <div class="user-info">
+        <div class="chat-avatar" [attr.data-initial]="selectedUser.initial">
+          <img
+            *ngIf="selectedUser.avatar"
+            [src]="selectedUser.avatar"
+            [alt]="selectedUser.name"
+          />
+        </div>
+        <div class="user-details">
+          <h3>{{ selectedUser.name }}</h3>
+          <span class="status" [class.online]="selectedUser.isOnline"
+            >{{ selectedUser.status }}</span
+          >
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="view-profile">View Profile</button>
+      </div>
+    </div>
+
+    <!-- Messages Area -->
+    <div class="messages-area">
+      <div
+        *ngFor="let message of messages"
+        class="message"
+        [class.sent]="message.sender === 'user'"
+        [class.received]="message.sender !== 'user'"
+      >
+        <div class="message-bubble">
+          <!-- Normal text message -->
+          <ng-container *ngIf="!message.isFile && !message.hasThumb">
+            {{ message.text }}
+          </ng-container>
+
+          <!-- Inline image (hasThumb) -->
+          <div *ngIf="message.hasThumb" class="inline-image">
+            {{ message.text }}
+            <img [src]="message.thumbUrl" alt="Attachment" />
+          </div>
+
+          <!-- File attachment (PDF, etc.) -->
+          <div *ngIf="message.isFile" class="file-attachment">
+            <span class="file-icon">📄</span>
+            <span class="file-name">{{ message.fileName }}</span>
+            <span class="file-time">{{ message.time }}</span>
+          </div>
+
+          <!-- Time for normal text messages -->
+          <span class="message-time" *ngIf="!message.isFile && !message.hasThumb"
+            >{{ message.time }}</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="input-area">
+      <button class="upload-btn" (click)="fileInput.click()">
+        <span class="upload-icon">📎</span>
+        Upload files
+      </button>
+      <input #fileInput type="file" (change)="uploadFile($event)" hidden />
+
+      <div class="message-input">
+        <input
+          type="text"
+          [(ngModel)]="newMessage"
+          placeholder="Type a message..."
+          (keyup.enter)="sendMessage()"
+        />
+      </div>
+
+      <button class="send-btn" (click)="sendMessage()">
+        <span>➤</span>
+      </button>
+    </div>
+  </div>
+</div>

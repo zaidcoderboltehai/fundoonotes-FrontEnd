@@ -1,0 +1,100 @@
+<div class="register-page">
+  <div class="content-box">
+    
+    <!-- Left Section -->
+    <div class="left-content">
+      <img src="assets/images/google-logo.png" alt="Google Logo" class="google-logo" />
+      <h1>Create your Google Account</h1>
+      <p class="subtitle">To continue to FundooNotes</p>
+      <p>
+        Keep your account details secure. 
+        This account will be available to other Google apps in the browser.
+      </p>
+    </div>
+
+    <!-- Right Section -->
+    <div class="right-content">
+      <div class="register-box">
+        <!-- Name Fields -->
+        <div class="name-fields">
+          <div class="input-field">
+            <input 
+              type="text" 
+              id="firstName" 
+              class="input-box" 
+              placeholder=" "
+            />
+            <label for="firstName" class="input-label">First name</label>
+          </div>
+          <div class="input-field">
+            <input 
+              type="text" 
+              id="lastName" 
+              class="input-box" 
+              placeholder=" "
+            />
+            <label for="lastName" class="input-label">Last name</label>
+          </div>
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="input-field">
+          <input 
+            type="date" 
+            id="dob" 
+            class="input-box" 
+            placeholder=" "
+          />
+          <label for="dob" class="input-label">Birthday</label>
+        </div>
+
+        <!-- Gender Select -->
+        <div class="input-field">
+          <select 
+            id="gender" 
+            class="input-box"
+          >
+            <option value=""> </option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+          <label for="gender" class="input-label">Gender</label>
+        </div>
+
+        <!-- Email Field -->
+        <div class="input-field">
+          <input 
+            type="email" 
+            id="email" 
+            class="input-box" 
+            placeholder=" " 
+            autocomplete="username"
+          />
+          <label for="email" class="input-label">Email</label>
+        </div>
+
+        <!-- Password Field -->
+        <div class="input-field">
+          <input 
+            type="password" 
+            id="password" 
+            class="input-box" 
+            placeholder=" " 
+            autocomplete="new-password"
+          />
+          <label for="password" class="input-label">Password</label>
+        </div>
+
+        <!-- Register Button -->
+        <button class="register-btn">Next</button>
+
+        <!-- Footer Links -->
+        <div class="footer">
+          <a routerLink="/login" class="login-link">Sign in instead</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
