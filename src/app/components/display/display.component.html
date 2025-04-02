@@ -1,0 +1,52 @@
+<div class="notes-wrapper">
+  <!-- Notes Grid -->
+  <div class="notes-grid">
+    <div *ngFor="let note of notes" 
+         class="note-card" 
+         [style.background]="note.Color"
+         [attr.data-archived]="note.isArchived">
+      <div class="note-content">
+        <h3 *ngIf="note.title">{{ note.title }}</h3>
+        <p>{{ note.description }}</p>
+        
+        <!-- Labels Section -->
+        <div *ngIf="note.labels?.length" class="labels-container">
+          <div class="label-chip" *ngFor="let label of note.labels">
+            {{ label.Name }}
+          </div>
+        </div>
+      </div>
+      
+      <!-- Note Actions -->
+      <div class="note-actions">
+        <!-- Restore Button (only in trash) -->
+        <button *ngIf="isTrash" mat-icon-button 
+                (click)="toggleRestore(note)" 
+                matTooltip="Restore">
+          <mat-icon>unarchive</mat-icon>
+        </button>
+
+        <!-- Archive/Unarchive (only when not in trash) -->
+        <button *ngIf="!isTrash" mat-icon-button 
+                (click)="toggleArchive(note)" 
+                [matTooltip]="note.isArchived ? 'Unarchive' : 'Archive'">
+          <mat-icon>{{ note.isArchived ? 'unarchive' : 'archive' }}</mat-icon>
+        </button>
+
+        <!-- Common Actions -->
+        <button mat-icon-button (click)="editNote(note)" matTooltip="Edit">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button (click)="deleteNote(note)" matTooltip="Delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!notes?.length" class="empty-state">
+    <mat-icon>note_add</mat-icon>
+    <p>Notes you add appear here</p>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="archive-container">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+    <span>Loading archived notes...</span>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="error">
+    <mat-icon>error_outline</mat-icon>
+    {{ errorMessage }}
+  </div>
+
+  <!-- Notes Display -->
+  <app-display 
+    [notes]="filteredNotes"
+    (archive)="onToggleArchive($event)"
+    (edit)="onEditNote($event)"
+    (delete)="onDeleteNote($event)">
+  </app-display>
+</div>

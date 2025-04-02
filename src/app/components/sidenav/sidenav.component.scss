@@ -1,0 +1,115 @@
+.topbar {
+  background-color: white;
+  color: #5f6368;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3), 0 2px 6px 2px rgba(60, 64, 67, 0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  
+  .title {
+    font-size: 1.2rem;
+    margin-left: 8px;
+    color: #5f6368;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+    background-color: #f1f3f4;
+    border-radius: 8px;
+    padding: 0 16px;
+    height: 48px;
+    width: 720px;
+    max-width: 50%;
+    margin-right: 16px;
+    position: relative; // Added for clear button positioning
+    
+    mat-icon {
+      color: #5f6368;
+      margin-right: 16px;
+    }
+    
+    .search-input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-size: 16px;
+      width: 100%;
+      color: #202124;
+      padding-right: 32px; // Added space for clear button
+    }
+
+    // Clear button styles
+    .clear-button {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      color: #5f6368;
+      
+      &:hover {
+        color: #202124;
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+      }
+      
+      mat-icon {
+        font-size: 18px;
+        margin-right: 0;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
+.main-container {
+  height: calc(100vh - 64px);
+  background-color: #fff;
+}
+
+.side-nav {
+  width: 280px;
+  border-right: 1px solid #e0e0e0;
+  background-color: #fff;
+  
+  mat-nav-list {
+    padding-top: 8px;
+    
+    a {
+      margin: 0 8px;
+      border-radius: 0 25px 25px 0;
+      color: #202124;
+      font-weight: 500;
+      
+      mat-icon {
+        margin-right: 24px;
+        color: #5f6368;
+      }
+      
+      &:hover {
+        background-color: #f1f3f4;
+      }
+      
+      &.active-link {
+        background-color: #feefc3;
+        
+        mat-icon {
+          color: #202124;
+        }
+      }
+    }
+  }
+}
+
+.content-wrapper {
+  padding: 16px;
+  background-color: #fff;
+}

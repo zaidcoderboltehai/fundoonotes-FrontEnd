@@ -1,0 +1,68 @@
+<!-- File: get-all-notes.component.html -->
+<div class="notes-container">
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="loading-indicator">
+    <mat-spinner diameter="40"></mat-spinner>
+    <span>Loading notes...</span>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="error-message">
+    <mat-icon>error_outline</mat-icon>
+    {{ errorMessage }}
+    <button mat-button (click)="errorMessage = ''">Close</button>
+  </div>
+
+  <!-- Note Creation Section -->
+  <div class="take-note-container">
+    <!-- Collapsed Note Input -->
+    <div *ngIf="!takeNoteExpanded" class="take-note-collapsed" (click)="toggleTakeNote()">
+      <span>Write a note...</span>
+      <div class="actions">
+        <button mat-icon-button><mat-icon>check_box</mat-icon></button>
+        <button mat-icon-button><mat-icon>brush</mat-icon></button>
+        <button mat-icon-button><mat-icon>image</mat-icon></button>
+      </div>
+    </div>
+
+    <!-- Expanded Note Input -->
+    <div *ngIf="takeNoteExpanded" class="take-note-expanded">
+      <input type="text" [(ngModel)]="newNoteTitle" placeholder="Title">
+      <textarea [(ngModel)]="newNoteDesc" placeholder="Note details"></textarea>
+      
+      <!-- Color Picker (Fixed) -->
+      <div class="color-picker">
+        <div 
+          *ngFor="let color of colors"
+          [style.background]="color.code"
+          (click)="selectColor(color.code)"
+          [class.selected]="(isEditing ? selectedNote?.Color : selectedColor) === color.code"
+          matTooltip="{{color.name}}"
+        ></div>
+      </div>
+
+      <!-- Save/Cancel Buttons -->
+      <div class="actions">
+        <div class="note-tools">
+          <button mat-icon-button><mat-icon>add_alert</mat-icon></button>
+          <button mat-icon-button><mat-icon>person_add</mat-icon></button>
+          <button mat-icon-button><mat-icon>image</mat-icon></button>
+          <button mat-icon-button><mat-icon>archive</mat-icon></button>
+        </div>
+        <button mat-button (click)="closeNote()">{{ isEditing ? 'Cancel' : 'Close' }}</button>
+        <button mat-button (click)="saveNewNote()" color="primary">{{ isEditing ? 'Update' : 'Save' }}</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Display Notes -->
+  <div class="notes-grid">
+    <!-- Changed noteArray to filteredNotes -->
+    <app-display 
+      [notes]="filteredNotes"
+      (archive)="onArchiveNote($event)"
+      (edit)="onEditNote($event)"
+      (delete)="onDeleteNote($event)"
+    ></app-display>
+  </div>
+</div>

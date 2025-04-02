@@ -1,0 +1,40 @@
+<div class="notes-container">
+  <!-- Box for creating a new note -->
+  <div class="note-editor" [class.expanded]="isExpanded">
+    <input 
+      type="text" 
+      [(ngModel)]="newNote.title" 
+      placeholder="Title"
+      (click)="isExpanded = true"
+    />
+    <textarea 
+      [(ngModel)]="newNote.description" 
+      placeholder="Take a note..."
+      *ngIf="isExpanded"
+    ></textarea>
+    <div class="editor-actions" *ngIf="isExpanded">
+      <button mat-icon-button aria-label="Add alert">
+        <mat-icon>add_alert</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Save note" (click)="saveNote()">
+        <mat-icon>check</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Grid view for notes -->
+  <div class="notes-grid">
+    <div *ngFor="let note of notes" class="note-card">
+      <div class="note-content">
+        <h3>{{ note.title }}</h3>
+        <pre>{{ note.description }}</pre>
+      </div>
+      <div class="note-footer">
+        <span class="label" *ngIf="note.label">{{ note.label }}</span>
+        <button mat-icon-button aria-label="More options">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

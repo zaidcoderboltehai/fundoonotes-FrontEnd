@@ -18,9 +18,12 @@
         <!-- Name Fields -->
         <div class="name-fields">
           <div class="input-field">
+            <!-- Bind to component property -->
             <input 
               type="text" 
-              id="firstName" 
+              id="firstName"
+              [(ngModel)]="firstName"
+              name="firstName"
               class="input-box" 
               placeholder=" "
             />
@@ -29,7 +32,9 @@
           <div class="input-field">
             <input 
               type="text" 
-              id="lastName" 
+              id="lastName"
+              [(ngModel)]="lastName"
+              name="lastName"
               class="input-box" 
               placeholder=" "
             />
@@ -37,27 +42,33 @@
           </div>
         </div>
 
-        <!-- Date of Birth -->
+        <!-- Birthday Field -->
         <div class="input-field">
           <input 
             type="date" 
-            id="dob" 
+            id="birthday" 
+            [(ngModel)]="birthday"
+            name="birthday"
             class="input-box" 
             placeholder=" "
+            required
           />
-          <label for="dob" class="input-label">Birthday</label>
+          <label for="birthday" class="input-label">Birthday</label>
         </div>
 
-        <!-- Gender Select -->
+        <!-- Gender Field -->
         <div class="input-field">
           <select 
             id="gender" 
+            [(ngModel)]="gender"
+            name="gender"
             class="input-box"
+            required
           >
-            <option value=""> </option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
           </select>
           <label for="gender" class="input-label">Gender</label>
         </div>
@@ -66,7 +77,9 @@
         <div class="input-field">
           <input 
             type="email" 
-            id="email" 
+            id="email"
+            [(ngModel)]="email"
+            name="email"
             class="input-box" 
             placeholder=" " 
             autocomplete="username"
@@ -78,7 +91,9 @@
         <div class="input-field">
           <input 
             type="password" 
-            id="password" 
+            id="password"
+            [(ngModel)]="password"
+            name="password"
             class="input-box" 
             placeholder=" " 
             autocomplete="new-password"
@@ -86,8 +101,13 @@
           <label for="password" class="input-label">Password</label>
         </div>
 
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+
         <!-- Register Button -->
-        <button class="register-btn">Next</button>
+        <button class="register-btn" (click)="onSubmit()">Next</button>
 
         <!-- Footer Links -->
         <div class="footer">

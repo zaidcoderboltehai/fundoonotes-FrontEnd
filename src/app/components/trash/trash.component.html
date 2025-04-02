@@ -1,0 +1,24 @@
+<!-- trash.component.html -->
+<div class="trash-container">
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="loading-state">
+    <mat-spinner diameter="40"></mat-spinner>
+    <span>Loading trashed notes...</span>
+  </div>
+
+  <!-- Notes Display -->
+  <app-display 
+    *ngIf="!loading"
+    [notes]="trashedNotes"
+    [isTrash]="true"
+    (restore)="onRestoreNote($event)"
+    (delete)="onDeletePermanently($event)">
+  </app-display>
+
+  <!-- Empty State -->
+  <div *ngIf="!trashedNotes.length && !loading" class="empty-state">
+    <mat-icon class="empty-icon">delete_outline</mat-icon>
+    <p class="empty-text">Your trash is empty</p>
+    <small class="empty-subtext">Deleted notes appear here</small>
+  </div>
+</div>

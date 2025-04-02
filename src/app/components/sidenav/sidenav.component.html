@@ -1,0 +1,72 @@
+<!-- sidenav.component.html -->
+<mat-toolbar color="primary" class="topbar">
+  <mat-toolbar-row>
+    <!-- Hamburger menu -->
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <!-- App title -->
+    <span class="title">Fundoo Notes</span>
+
+    <!-- Spacer -->
+    <span class="spacer"></span>
+
+    <!-- Search bar with clear button -->
+    <div class="search-container">
+      <mat-icon>search</mat-icon>
+      <input 
+        type="text" 
+        placeholder="Search" 
+        class="search-input" 
+        [(ngModel)]="searchText" 
+        (input)="onSearch()"
+      >
+      <button 
+        *ngIf="searchText" 
+        mat-icon-button 
+        (click)="searchText = ''; onSearch()"
+        class="clear-button"
+        aria-label="Clear search"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- User profile -->
+    <button mat-icon-button>
+      <mat-icon>account_circle</mat-icon>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container class="main-container">
+  <mat-sidenav #sidenav mode="side" [opened]="true" class="side-nav">
+    <mat-nav-list>
+      <!-- Navigation links -->
+      <a mat-list-item routerLink="/dashboard/notes" routerLinkActive="active-link">
+        <mat-icon>lightbulb</mat-icon> Notes
+      </a>
+      <a mat-list-item routerLink="/dashboard/reminders" routerLinkActive="active-link">
+        <mat-icon>notifications</mat-icon> Reminders
+      </a>
+      <a mat-list-item routerLink="/dashboard/archive" routerLinkActive="active-link">
+        <mat-icon>archive</mat-icon> Archive
+      </a>
+      <a mat-list-item routerLink="/dashboard/trash" routerLinkActive="active-link">
+        <mat-icon>delete</mat-icon> Trash
+      </a>
+      
+      <mat-divider></mat-divider>
+      
+      <!-- Logout -->
+      <a mat-list-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon> Logout
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content-wrapper">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
