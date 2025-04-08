@@ -76,7 +76,7 @@ import { TrashComponent } from './components/trash/trash.component';
     SidenavComponent,
     DisplayComponent,
     GetAllNotesComponent,
-    TrashComponent, // ✅ Correctly Imported
+    TrashComponent, // 
   ],
   providers: [],
   bootstrap: [AppComponent],
