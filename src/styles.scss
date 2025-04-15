@@ -1,4 +1,102 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* ===== Global Responsive Mixins ===== */
+@mixin mobile-xs {
+  @media (max-width: 480px) { @content; }
+}
+
+@mixin tablet {
+  @media (min-width: 481px) and (max-width: 768px) { @content; }
+}
+
+@mixin mobile {
+  @media (max-width: 768px) { @content; }
+}
+
+html, body { 
+  height: 100%; 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+/* ===== Base Responsive Styles ===== */
+html {
+  font-size: 100%;
+
+  @include mobile {
+    font-size: 90%;
+  }
+}
+
+.mat-toolbar {
+  @include mobile {
+    padding: 0 8px !important;
+    
+    .title {
+      display: none !important;
+    }
+  }
+}
+
+/* ===== Note Grid Responsiveness ===== */
+.notes-grid {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @include mobile-xs {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 768px) and (max-width: 1024px) { /* iPad Pro */
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ===== Sidenav Mobile Optimization ===== */
+.mat-sidenav {
+  @include mobile {
+    width: 100% !important;
+    position: fixed !important;
+    z-index: 1000;
+    
+    &.mat-drawer-opened {
+      box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+    }
+  }
+}
+
+/* ===== Component-specific Adjustments ===== */
+.dashboard-container {
+  @include mobile {
+    padding: 8px;
+    min-height: calc(100vh - 56px);
+  }
+}
+
+.take-note-expanded {
+  @include mobile-xs {
+    width: 95%;
+    margin: 8px auto;
+  }
+}
+
+/* ===== Touch Targets & Mobile Typography ===== */
+button, .note-card, .nav-tabs .tab {
+  min-width: 48px;
+  min-height: 48px;
+}
+
+@include mobile-xs {
+  body { 
+    font-size: 14px; 
+  }
+  h1 { 
+    font-size: 1.5rem; 
+  }
+  .note-card h3 { 
+    font-size: 1rem; 
+  }
+}

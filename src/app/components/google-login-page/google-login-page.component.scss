@@ -153,13 +153,14 @@ body {
   margin-top: 15px;
 
   .create-account {
+    color: #1a73e8;
     text-decoration: none;
-    color: $primary-color;
-    font-size: 15px;
+    cursor: pointer;
     transition: color 0.3s ease;
 
     &:hover {
-      color: #0c56a6;
+      text-decoration: underline;
+      color: #0d47a1;
     }
   }
 

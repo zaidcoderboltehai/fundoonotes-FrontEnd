@@ -1,25 +1,20 @@
 /* ---------- Variables ---------- */
 $primary-color: #1a73e8;
 $text-color: #5f6368;
+$error-color: #d93025;
 $box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 $font-family: 'Roboto', sans-serif;
 
-/* Global body styling (overflow removed) */
+/* Global body styling */
 body {
   background-color: gray;
   height: 100vh;
   width: 100vw;
   margin: 0;
-  /* overflow: hidden; <-- HATADO */
   font-family: $font-family;
 }
 
-/* Outer Container */
-// .register-page {
-//   /* optional styling */
-// }
-
-/* content-box => Horizontal card in the center */
+/* Main container */
 .content-box {
   display: flex;
   background-color: #fff;
@@ -27,15 +22,14 @@ body {
   box-shadow: $box-shadow;
   width: 100%;
   max-width: 960px;
-  /* height: 600px; <-- Remove this line */
-  min-height: 600px; /* Ab yeh rakh diya, container height expand ho jayegi agar content badhega */
+  min-height: 600px;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-/* Left side with Google logo, heading, text */
+/* Left content section */
 .left-content {
   flex: 1;
   display: flex;
@@ -69,7 +63,7 @@ body {
   }
 }
 
-/* Right side => the form fields */
+/* Right content section */
 .right-content {
   flex: 1;
   padding: 30px 40px;
@@ -79,7 +73,7 @@ body {
   align-items: center;
 }
 
-/* The container for register fields */
+/* Registration form container */
 .register-box {
   width: 500px;
   max-width: 450px;
@@ -90,6 +84,7 @@ body {
     margin-bottom: 20px;
   }
 
+  /* Input field styling */
   .input-field {
     position: relative;
     margin-bottom: 24px;
@@ -107,7 +102,7 @@ body {
       &:focus {
         border-color: $primary-color;
         outline: none;
-        box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.3);
+        box-shadow: 0 0 0 2px rgba($primary-color, 0.3);
       }
 
       &::placeholder {
@@ -115,6 +110,7 @@ body {
       }
     }
 
+    /* Floating label effect */
     .input-label {
       position: absolute;
       left: 15px;
@@ -135,12 +131,23 @@ body {
       color: $primary-color;
     }
 
-    select.input-box {
-      appearance: none;
-      background: url('data:image/svg+xml;utf8,<svg fill="%235F6368" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+    /* Validation error messages */
+    .validation-error {
+      color: $error-color;
+      font-size: 12px;
+      margin-top: 4px;
+      padding: 0 8px;
     }
   }
 
+  /* Custom select dropdown */
+  select.input-box {
+    appearance: none;
+    background: url('data:image/svg+xml;utf8,<svg fill="%235F6368" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') 
+      no-repeat right 10px center;
+  }
+
+  /* Submit button */
   .register-btn {
     width: 100%;
     background: $primary-color;
@@ -158,8 +165,32 @@ body {
       background: darken($primary-color, 10%);
       box-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
+
+    &[disabled] {
+      opacity: 0.7;
+      cursor: not-allowed;
+      background: lighten($primary-color, 25%);
+    }
   }
 
+  /* Server error messages */
+  .error-message {
+    color: $error-color;
+    background-color: #fdeded;
+    padding: 12px;
+    border-radius: 4px;
+    margin: 16px 0;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    mat-icon {
+      font-size: 20px;
+    }
+  }
+
+  /* Footer links */
   .footer {
     margin-top: 16px;
     text-align: center;
@@ -170,11 +201,37 @@ body {
       font-weight: 500;
       font-size: 14px;
       padding: 8px;
+      
       &:hover {
         text-decoration: underline;
         background: #f6fafe;
         border-radius: 4px;
       }
+    }
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .content-box {
+    flex-direction: column;
+    min-height: auto;
+    position: static;
+    transform: none;
+    margin: 20px;
+  }
+
+  .left-content,
+  .right-content {
+    padding: 20px;
+  }
+
+  .register-box {
+    width: 100%;
+    
+    .name-fields {
+      flex-direction: column;
+      gap: 15px;
     }
   }
 }

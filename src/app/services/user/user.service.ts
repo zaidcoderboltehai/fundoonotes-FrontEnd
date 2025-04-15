@@ -44,7 +44,6 @@ export class UserService {
       tap((response) => {
         if (response.token) {
           localStorage.setItem('authToken', response.token);
-          console.log('Token stored:', response.token);
         }
       }),
       catchError((error) => {
@@ -82,7 +81,6 @@ export class UserService {
       `${this.apiUrl}/User/reset-password`, 
       { email, token, newPassword }
     ).pipe(
-      tap(() => console.log('Password reset successful!')),
       catchError((error) => {
         console.error('Reset password error:', error);
         return throwError(() => error);
@@ -101,7 +99,6 @@ export class UserService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       catchError((error) => {
-        console.error('Get notes error:', error);
         if (error.status === 401) this.router.navigate(['/login']);
         return throwError(() => error);
       })
@@ -115,7 +112,6 @@ export class UserService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       catchError((error) => {
-        console.error('Create note error:', error);
         if (error.status === 401) this.router.navigate(['/login']);
         return throwError(() => error);
       })
@@ -129,7 +125,6 @@ export class UserService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       catchError((error) => {
-        console.error('Update note error:', error);
         if (error.status === 401) this.router.navigate(['/login']);
         return throwError(() => error);
       })
@@ -142,7 +137,19 @@ export class UserService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       catchError((error) => {
-        console.error('Delete note error:', error);
+        if (error.status === 401) this.router.navigate(['/login']);
+        return throwError(() => error);
+      })
+    );
+  }
+
+  // NEW PERMANENT DELETE METHOD
+  deletePermanently(id: number): Observable<any> {
+    return this.http.delete<any>(
+      `${this.apiUrl}/notes/${id}/permanent`,
+      { headers: this.getAuthHeaders() }
+    ).pipe(
+      catchError((error) => {
         if (error.status === 401) this.router.navigate(['/login']);
         return throwError(() => error);
       })
@@ -156,7 +163,6 @@ export class UserService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       catchError((error) => {
-        console.error('Archive note error:', error);
         if (error.status === 401) this.router.navigate(['/login']);
         return throwError(() => error);
       })
@@ -170,7 +176,6 @@ export class UserService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       catchError((error) => {
-        console.error(trash ? 'Trash' : 'Restore' + ' note error:', error);
         if (error.status === 401) this.router.navigate(['/login']);
         return throwError(() => error);
       })
@@ -187,7 +192,6 @@ export class UserService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       catchError((error) => {
-        console.error('Get archived notes error:', error);
         if (error.status === 401) this.router.navigate(['/login']);
         return throwError(() => error);
       })
@@ -200,7 +204,6 @@ export class UserService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       catchError((error) => {
-        console.error('Get trashed notes error:', error);
         if (error.status === 401) this.router.navigate(['/login']);
         return throwError(() => error);
       })
@@ -214,7 +217,6 @@ export class UserService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       catchError((error) => {
-        console.error('Add label to note error:', error);
         if (error.status === 401) this.router.navigate(['/login']);
         return throwError(() => error);
       })
@@ -227,7 +229,6 @@ export class UserService {
       { headers: this.getAuthHeaders() }
     ).pipe(
       catchError((error) => {
-        console.error('Remove label from note error:', error);
         if (error.status === 401) this.router.navigate(['/login']);
         return throwError(() => error);
       })

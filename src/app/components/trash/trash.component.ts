@@ -1,4 +1,3 @@
-// trash.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { CommonModule } from '@angular/common';
@@ -27,7 +26,9 @@ export class TrashComponent implements OnInit, OnDestroy {
   trashedNotes: any[] = [];
   originalNotes: any[] = [];
   loading = false;
+  isGridView: boolean = true; // Added view mode state
   private searchSubscription!: Subscription;
+  private viewModeSubscription!: Subscription; // Added for view mode
 
   constructor(
     private userService: UserService,
@@ -38,6 +39,7 @@ export class TrashComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadTrashedNotes();
     this.setupSearch();
+    this.setupViewMode();
   }
 
   private setupSearch(): void {
@@ -49,11 +51,16 @@ export class TrashComponent implements OnInit, OnDestroy {
     });
   }
 
+  private setupViewMode(): void {
+    this.viewModeSubscription = this.searchService.currentView.subscribe(
+      isGrid => this.isGridView = isGrid
+    );
+  }
+
   private filterNotes(query: string): any[] {
     if (!query) return [...this.originalNotes];
     const lowerQuery = query.toLowerCase();
     return this.originalNotes.filter(note => 
-      // Corrected property names to lowercase
       note.title?.toLowerCase().includes(lowerQuery) || 
       note.description?.toLowerCase().includes(lowerQuery)
     );
@@ -70,21 +77,25 @@ export class TrashComponent implements OnInit, OnDestroy {
       error: (err) => {
         console.error('Error loading notes:', err);
         this.loading = false;
-        this.snackBar.open('Failed to load notes', 'Close', { duration: 3000 });
+        this.snackBar.open('Notes could not be loaded', 'Close', { duration: 3000 });
       }
     });
   }
 
   onDeletePermanently(note: any): void {
-    if (confirm('Permanently delete this note?')) {
-      this.userService.deleteNote(note.id).subscribe({
+    if (confirm('Do you really want to permanently delete this note?')) {
+      this.userService.deletePermanently(note.id).subscribe({
         next: () => {
           this.loadTrashedNotes();
-          this.snackBar.open('Note deleted permanently', 'Close', { duration: 2000 });
+          this.snackBar.open('Note has been permanently deleted', 'Close', { 
+            duration: 2000 
+          });
         },
         error: (err) => {
-          console.error('Delete failed:', err);
-          this.snackBar.open('Deletion failed', 'Close', { duration: 3000 });
+          console.error('Delete error:', err);
+          this.snackBar.open('Deletion failed, please try again', 'Close', { 
+            duration: 3000 
+          });
         }
       });
     }
@@ -112,6 +123,9 @@ export class TrashComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
+    }
+    if (this.viewModeSubscription) {
+      this.viewModeSubscription.unsubscribe();
     }
   }
 }

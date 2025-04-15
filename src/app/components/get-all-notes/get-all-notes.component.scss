@@ -2,12 +2,24 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 16px;
+
+  @media (max-width: 768px) {
+    padding: 12px;
+  }
 }
 
-// Take a Note Component
 .take-note-container {
   max-width: 600px;
   margin: 32px auto;
+  
+  @media (max-width: 768px) {
+    margin: 16px auto;
+    width: 90%;
+  }
+  
+  @media (max-width: 480px) {
+    width: 95%;
+  }
 }
 
 .take-note-collapsed {
@@ -20,10 +32,15 @@
   padding: 12px 16px;
   min-height: 46px;
   cursor: text;
+  transition: all 0.2s ease;
   
   span {
     color: #5f6368;
     font-size: 16px;
+    
+    @media (max-width: 480px) {
+      font-size: 14px;
+    }
   }
   
   .actions {
@@ -31,6 +48,13 @@
     
     button {
       color: #5f6368;
+      padding: 4px;
+    }
+    
+    @media (max-width: 480px) {
+      button {
+        margin-left: 4px;
+      }
     }
   }
 }
@@ -53,6 +77,10 @@
     &:focus {
       outline: none;
     }
+    
+    @media (max-width: 480px) {
+      font-size: 14px;
+    }
   }
   
   .note-desc-input {
@@ -67,9 +95,12 @@
     &:focus {
       outline: none;
     }
+    
+    @media (max-width: 480px) {
+      font-size: 13px;
+    }
   }
 
-  // Color Picker Styles
   .color-picker {
     display: flex;
     gap: 8px;
@@ -95,6 +126,11 @@
         transform: scale(1.1);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
+      
+      @media (max-width: 480px) {
+        width: 24px;
+        height: 24px;
+      }
     }
   }
   
@@ -106,12 +142,10 @@
     
     .note-tools {
       display: flex;
+      gap: 4px;
       
-      button {
-        color: #5f6368;
-        &:hover {
-          background-color: rgba(95, 99, 104, 0.1);
-        }
+      @media (max-width: 480px) {
+        gap: 2px;
       }
     }
 
@@ -124,15 +158,47 @@
         }
       }
     }
+    
+    @media (max-width: 600px) {
+      flex-direction: column-reverse;
+      gap: 12px;
+      
+      .note-tools {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      button[mat-button] {
+        width: 100%;
+        text-align: right;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      padding: 8px 0;
+      gap: 8px;
+      
+      button {
+        width: 100%;
+        padding: 6px 0;
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    padding: 12px;
+    margin-bottom: 12px;
   }
 }
 
-// Notes Grid
 .notes-grid {
   margin-top: 16px;
+  
+  @media (max-width: 480px) {
+    margin-top: 12px;
+  }
 }
 
-// Loading and Error States
 .loading-indicator {
   display: flex;
   align-items: center;
@@ -140,6 +206,10 @@
   gap: 12px;
   padding: 24px;
   color: #5f6368;
+  
+  @media (max-width: 480px) {
+    padding: 16px;
+  }
 }
 
 .error-message {
@@ -160,28 +230,9 @@
     margin-left: auto;
     color: #5f6368;
   }
-}
-
-// Responsive adjustments
-@media (max-width: 600px) {
-  .take-note-container {
-    margin: 16px auto;
-  }
   
-  .take-note-expanded {
-    .actions {
-      flex-direction: column-reverse;
-      gap: 12px;
-      
-      .note-tools {
-        width: 100%;
-        justify-content: space-between;
-      }
-      
-      button[mat-button] {
-        width: 100%;
-        text-align: right;
-      }
-    }
+  @media (max-width: 480px) {
+    padding: 8px 12px;
+    font-size: 14px;
   }
 }

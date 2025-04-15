@@ -1,10 +1,16 @@
 <div class="notes-wrapper">
-  <!-- Notes Grid -->
-  <div class="notes-grid">
+  <!-- Notes Grid with view mode classes -->
+  <div class="notes-grid" [class.grid-view]="isGridView" [class.list-view]="!isGridView">
     <div *ngFor="let note of notes" 
          class="note-card" 
-         [style.background]="note.Color"
+         [style.background]="note.color"
          [attr.data-archived]="note.isArchived">
+      
+      <!-- Debug Color Value -->
+      <div class="color-debug" *ngIf="!note.color">
+        🚨 No color found! Received: {{ note | json }}
+      </div>
+
       <div class="note-content">
         <h3 *ngIf="note.title">{{ note.title }}</h3>
         <p>{{ note.description }}</p>
@@ -12,7 +18,7 @@
         <!-- Labels Section -->
         <div *ngIf="note.labels?.length" class="labels-container">
           <div class="label-chip" *ngFor="let label of note.labels">
-            {{ label.Name }}
+            {{ label.name }}
           </div>
         </div>
       </div>
@@ -23,7 +29,7 @@
         <button *ngIf="isTrash" mat-icon-button 
                 (click)="toggleRestore(note)" 
                 matTooltip="Restore">
-          <mat-icon>unarchive</mat-icon>
+          <mat-icon>restore</mat-icon> <!-- Changed icon -->
         </button>
 
         <!-- Archive/Unarchive (only when not in trash) -->

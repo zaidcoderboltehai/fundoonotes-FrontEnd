@@ -16,6 +16,8 @@ export class ArchiveComponent implements OnInit, OnDestroy {
   loading = false;
   errorMessage = '';
   searchSubscription!: Subscription;
+  isGridView: boolean = true; // Added view mode state
+  private viewModeSubscription!: Subscription; // Added for view mode
 
   constructor(
     private userService: UserService,
@@ -26,6 +28,7 @@ export class ArchiveComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadArchivedNotes();
     this.setupSearch();
+    this.setupViewMode();
   }
 
   private setupSearch(): void {
@@ -37,12 +40,17 @@ export class ArchiveComponent implements OnInit, OnDestroy {
     });
   }
 
+  private setupViewMode(): void {
+    this.viewModeSubscription = this.searchService.currentView.subscribe(
+      isGrid => this.isGridView = isGrid
+    );
+  }
+
   private filterNotes(query: string): any[] {
     if (!query) return [...this.originalNotes];
     
     const lowerQuery = query.toLowerCase();
     return this.originalNotes.filter(note => {
-      // Corrected property names to lowercase
       const titleMatch = note.title?.toLowerCase().includes(lowerQuery);
       const descMatch = note.description?.toLowerCase().includes(lowerQuery);
       return titleMatch || descMatch;
@@ -107,6 +115,9 @@ export class ArchiveComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
+    }
+    if (this.viewModeSubscription) {
+      this.viewModeSubscription.unsubscribe();
     }
   }
 }

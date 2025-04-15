@@ -33,10 +33,24 @@
       </button>
     </div>
 
-    <!-- User profile -->
-    <button mat-icon-button>
+    <!-- View toggle button -->
+    <button mat-icon-button 
+            (click)="toggleView()"
+            matTooltip="{{ isGridView ? 'List view' : 'Grid view' }}">
+      <mat-icon>{{ isGridView ? 'view_list' : 'grid_view' }}</mat-icon>
+    </button>
+
+    <!-- Updated User profile with dropdown menu -->
+    <button mat-icon-button [matMenuTriggerFor]="profileMenu">
       <mat-icon>account_circle</mat-icon>
     </button>
+
+    <mat-menu #profileMenu="matMenu" yPosition="below" xPosition="before">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -59,10 +73,7 @@
       
       <mat-divider></mat-divider>
       
-      <!-- Logout -->
-      <a mat-list-item (click)="logout()">
-        <mat-icon>exit_to_app</mat-icon> Logout
-      </a>
+      <!-- Remove duplicate logout from sidenav -->
     </mat-nav-list>
   </mat-sidenav>
 

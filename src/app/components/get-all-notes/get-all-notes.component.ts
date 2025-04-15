@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from "../../services/user/user.service";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatIconModule } from "@angular/material/icon";
@@ -30,7 +30,7 @@ import { Subscription } from 'rxjs';
     MatTooltipModule
   ],
 })
-export class GetAllNotesComponent implements OnInit {
+export class GetAllNotesComponent implements OnInit, OnDestroy {
   loading = false;
   errorMessage = "";
   takeNoteExpanded = false;
@@ -39,6 +39,7 @@ export class GetAllNotesComponent implements OnInit {
   originalNotes: any[] = [];
   filteredNotes: any[] = [];
   searchSubscription!: Subscription;
+  isGridView: boolean = true;
 
   // Properties for editing
   isEditing = false;
@@ -68,6 +69,7 @@ export class GetAllNotesComponent implements OnInit {
   ngOnInit(): void {
     this.fetchNotes();
     this.setupSearch();
+    this.setupViewMode();
   }
 
   private setupSearch(): void {
@@ -79,12 +81,17 @@ export class GetAllNotesComponent implements OnInit {
     });
   }
 
+  private setupViewMode(): void {
+    this.searchService.currentView.subscribe(isGrid => {
+      this.isGridView = isGrid;
+    });
+  }
+
   private filterNotes(query: string): any[] {
     if (!query) return [...this.originalNotes];
     
     const lowerQuery = query.toLowerCase();
     return this.originalNotes.filter(note => {
-      // Corrected property names to lowercase
       const titleMatch = note.title?.toLowerCase().includes(lowerQuery);
       const descMatch = note.description?.toLowerCase().includes(lowerQuery);
       return titleMatch || descMatch;
@@ -142,18 +149,18 @@ export class GetAllNotesComponent implements OnInit {
   private prepareUpdatedNote(): any {
     return {
       ...this.selectedNote,
-      title: this.newNoteTitle,  // Changed to lowercase to match filter
-      description: this.newNoteDesc,  // Changed to lowercase to match filter
-      color: this.selectedNote.color || this.selectedColor  // Changed to lowercase
+      title: this.newNoteTitle,
+      description: this.newNoteDesc,
+      color: this.selectedNote.Color || this.selectedColor
     };
   }
 
   private prepareNewNote(): any {
     return {
-      title: this.newNoteTitle,  // Changed to lowercase
-      description: this.newNoteDesc,  // Changed to lowercase
-      color: this.selectedColor,  // Changed to lowercase
-      labels: [],  // Changed to lowercase
+      title: this.newNoteTitle,
+      description: this.newNoteDesc,
+      color: this.selectedColor,
+      labels: [],
     };
   }
 
@@ -179,9 +186,9 @@ export class GetAllNotesComponent implements OnInit {
   onEditNote(note: any): void {
     this.isEditing = true;
     this.selectedNote = note;
-    this.newNoteTitle = note.title;  // Changed to lowercase
-    this.newNoteDesc = note.description;  // Changed to lowercase
-    this.selectedColor = note.color || '#ffffff';  // Changed to lowercase
+    this.newNoteTitle = note.title;
+    this.newNoteDesc = note.description;
+    this.selectedColor = note.color || '#ffffff';
     this.takeNoteExpanded = true;
   }
 
@@ -198,7 +205,7 @@ export class GetAllNotesComponent implements OnInit {
   selectColor(colorCode: string): void {
     this.selectedColor = colorCode;
     if (this.isEditing && this.selectedNote) {
-      this.selectedNote.color = colorCode;  // Changed to lowercase
+      this.selectedNote.color = colorCode;
     }
   }
 

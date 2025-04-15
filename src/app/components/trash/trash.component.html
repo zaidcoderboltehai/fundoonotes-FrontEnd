@@ -11,6 +11,7 @@
     *ngIf="!loading"
     [notes]="trashedNotes"
     [isTrash]="true"
+    [isGridView]="isGridView"
     (restore)="onRestoreNote($event)"
     (delete)="onDeletePermanently($event)">
   </app-display>

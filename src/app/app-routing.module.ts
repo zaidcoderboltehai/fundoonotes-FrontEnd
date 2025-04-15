@@ -7,16 +7,15 @@ import { GoogleResetPasswordComponent } from "./components/google-reset-password
 import { WhatsChatCmpComponent } from "./components/whats-chat/whats-chat-cmp.component";
 import { GetAllNotesComponent } from "./components/get-all-notes/get-all-notes.component";
 import { ArchiveComponent } from "./components/archive/archive.component";
-import { TrashComponent } from "./components/trash/trash.component"; // ✅ Import TrashComponent
+import { TrashComponent } from "./components/trash/trash.component";
 import { SidenavComponent } from "./components/sidenav/sidenav.component";
 
 export const authGuard = () => !!localStorage.getItem('authToken');
 
 const routes: Routes = [
-  // Public routes
   { path: "login", component: GoogleLoginPageComponent },
-  { path: "register", component: GoogleRegisterPageComponent },
-  { path: "forgot-password", component: GoogleForgetPasswordComponent },
+  { path: "register", component: GoogleRegisterPageComponent },       
+  { path: "forgot-password", component: GoogleForgetPasswordComponent }, 
   { path: "reset-password/:token", component: GoogleResetPasswordComponent },
   
   // Feature route
@@ -26,18 +25,18 @@ const routes: Routes = [
   {
     path: "dashboard",
     component: SidenavComponent,
-    canActivate: [authGuard], // Auth guard for all child routes
+    canActivate: [authGuard],
     children: [
       { path: "", redirectTo: "notes", pathMatch: "full" },
       { path: "notes", component: GetAllNotesComponent },
       { path: "archive", component: ArchiveComponent },
-      { path: "trash", component: TrashComponent } // ✅ Added Trash route
+      { path: "trash", component: TrashComponent }
     ]
   },
 
   // Default redirects
   { path: "", redirectTo: "/login", pathMatch: "full" },
-  { path: "**", redirectTo: "/login" } // 404 handling
+  { path: "**", redirectTo: "/login" }
 ];
 
 @NgModule({

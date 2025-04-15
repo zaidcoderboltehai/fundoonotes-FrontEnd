@@ -15,6 +15,7 @@ export class DisplayComponent {
   // Inputs
   @Input() notes: any[] = [];
   @Input() isTrash: boolean = false;
+  @Input() isGridView: boolean = true; // Added view mode input
 
   // Outputs
   @Output() archive = new EventEmitter<any>();

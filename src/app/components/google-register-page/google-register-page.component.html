@@ -1,6 +1,5 @@
 <div class="register-page">
   <div class="content-box">
-    
     <!-- Left Section -->
     <div class="left-content">
       <img src="assets/images/google-logo.png" alt="Google Logo" class="google-logo" />
@@ -14,31 +13,57 @@
 
     <!-- Right Section -->
     <div class="right-content">
-      <div class="register-box">
+      <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="register-box">
         <!-- Name Fields -->
         <div class="name-fields">
           <div class="input-field">
-            <!-- Bind to component property -->
             <input 
               type="text" 
               id="firstName"
-              [(ngModel)]="firstName"
               name="firstName"
+              [(ngModel)]="firstName"
+              #firstNameInput="ngModel"
+              required
+              minlength="2"
               class="input-box" 
               placeholder=" "
+              autocomplete="given-name"
             />
             <label for="firstName" class="input-label">First name</label>
+            <div *ngIf="firstNameInput.invalid && (firstNameInput.dirty || firstNameInput.touched)"
+                 class="validation-error">
+              <div *ngIf="firstNameInput.errors?.['required']">
+                First name is required
+              </div>
+              <div *ngIf="firstNameInput.errors?.['minlength']">
+                Minimum 2 characters required
+              </div>
+            </div>
           </div>
+
           <div class="input-field">
             <input 
               type="text" 
               id="lastName"
-              [(ngModel)]="lastName"
               name="lastName"
+              [(ngModel)]="lastName"
+              #lastNameInput="ngModel"
+              required
+              minlength="2"
               class="input-box" 
               placeholder=" "
+              autocomplete="family-name"
             />
             <label for="lastName" class="input-label">Last name</label>
+            <div *ngIf="lastNameInput.invalid && (lastNameInput.dirty || lastNameInput.touched)"
+                 class="validation-error">
+              <div *ngIf="lastNameInput.errors?.['required']">
+                Last name is required
+              </div>
+              <div *ngIf="lastNameInput.errors?.['minlength']">
+                Minimum 2 characters required
+              </div>
+            </div>
           </div>
         </div>
 
@@ -47,23 +72,31 @@
           <input 
             type="date" 
             id="birthday" 
-            [(ngModel)]="birthday"
             name="birthday"
+            [(ngModel)]="birthday"
+            #birthdayInput="ngModel"
+            required
             class="input-box" 
             placeholder=" "
-            required
+            autocomplete="bday"
           />
           <label for="birthday" class="input-label">Birthday</label>
+          <div *ngIf="birthdayInput.invalid && (birthdayInput.dirty || birthdayInput.touched)"
+               class="validation-error">
+            Birthday is required
+          </div>
         </div>
 
         <!-- Gender Field -->
         <div class="input-field">
           <select 
             id="gender" 
-            [(ngModel)]="gender"
             name="gender"
-            class="input-box"
+            [(ngModel)]="gender"
+            #genderInput="ngModel"
             required
+            class="input-box"
+            autocomplete="sex"
           >
             <option value="">Select Gender</option>
             <option value="Male">Male</option>
@@ -71,6 +104,10 @@
             <option value="Other">Other</option>
           </select>
           <label for="gender" class="input-label">Gender</label>
+          <div *ngIf="genderInput.invalid && (genderInput.dirty || genderInput.touched)"
+               class="validation-error">
+            Gender is required
+          </div>
         </div>
 
         <!-- Email Field -->
@@ -78,13 +115,25 @@
           <input 
             type="email" 
             id="email"
-            [(ngModel)]="email"
             name="email"
+            [(ngModel)]="email"
+            #emailInput="ngModel"
+            required
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}"
             class="input-box" 
             placeholder=" " 
-            autocomplete="username"
+            autocomplete="email"
           />
           <label for="email" class="input-label">Email</label>
+          <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
+               class="validation-error">
+            <div *ngIf="emailInput.errors?.['required']">
+              Email is required
+            </div>
+            <div *ngIf="emailInput.errors?.['pattern']">
+              Please enter a valid email address
+            </div>
+          </div>
         </div>
 
         <!-- Password Field -->
@@ -92,29 +141,47 @@
           <input 
             type="password" 
             id="password"
-            [(ngModel)]="password"
             name="password"
+            [(ngModel)]="password"
+            #passwordInput="ngModel"
+            required
+            minlength="6"
             class="input-box" 
             placeholder=" " 
             autocomplete="new-password"
           />
           <label for="password" class="input-label">Password</label>
+          <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)"
+               class="validation-error">
+            <div *ngIf="passwordInput.errors?.['required']">
+              Password is required
+            </div>
+            <div *ngIf="passwordInput.errors?.['minlength']">
+              Minimum 6 characters required
+            </div>
+          </div>
         </div>
 
         <!-- Error Message -->
         <div *ngIf="errorMessage" class="error-message">
+          <mat-icon>error_outline</mat-icon>
           {{ errorMessage }}
         </div>
 
         <!-- Register Button -->
-        <button class="register-btn" (click)="onSubmit()">Next</button>
+        <button 
+          class="register-btn" 
+          type="submit"
+          [disabled]="registerForm.invalid"
+        >
+          Next
+        </button>
 
         <!-- Footer Links -->
         <div class="footer">
           <a routerLink="/login" class="login-link">Sign in instead</a>
         </div>
-      </div>
+      </form>
     </div>
-
   </div>
 </div>

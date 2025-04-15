@@ -57,9 +57,9 @@
 
   <!-- Display Notes -->
   <div class="notes-grid">
-    <!-- Changed noteArray to filteredNotes -->
     <app-display 
       [notes]="filteredNotes"
+      [isGridView]="isGridView"
       (archive)="onArchiveNote($event)"
       (edit)="onEditNote($event)"
       (delete)="onDeleteNote($event)"
